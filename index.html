@@ -24,10 +24,9 @@
 <body>
 please wait,sjs program init...
 <script type="text/javascript">
-debugger
 sjs.pathMap("Core6","src/Core6")
 .using("Core6.Cls")
-.using(qs.JS)
+.using(qs.JS || "examples.Hello")
 .run(function(cls,typeCfg){
     var ui = cls.create(typeCfg,{initStart:true}).renderTo("body");
     ui.title && (document.title = ui.title);
