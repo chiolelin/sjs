@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>sjs(a enterprise javascript UI framework)</title>  
+    <script type="text/javascript" src="src/sjs.js"></script>   
+</head>
+<body>
+please wait,sjs program init...
+<script type="text/javascript">
+sjs//.pathMap("jQuery","ref/jquery-1.8.3.js")
+.using("Core6.Cls")
+.using(qs.JS)
+.run(function(cls,typeCfg){
+    var ui = cls.create(typeCfg,{initStart:true}).renderTo("body");
+    ui.title && (document.title = ui.title);
+});
+</script>
+</body>
+</html>
