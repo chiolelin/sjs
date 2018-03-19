@@ -167,7 +167,8 @@ var sjs = (function(UNDEF) {
             return name;
         }
 
-        ,_parseJsMod:function(){
+        ,_parseJsMod:function(name){
+            //debugger
             var mod;
             //default path for a js mod(reference js almost like this ,because can sjs.path to modify its version)
             var nameAndDefaultPath = name.split("=");      //for js only,loadJs("jQuery=ref/jQuery-1.1.3.min.js")
@@ -262,7 +263,7 @@ var sjs = (function(UNDEF) {
 
         //when sjs.using(js),it's not resolved yet,mod created for remember all its references only,then when the real mod define,we can copy the references to the real mod._ref
         ,_replaceMod:function(needID){
-            if(this._status = MOD_STATUS.LOADED){
+            if(this._status == MOD_STATUS.LOADED){
                 throw new Error(this.id + " is loaded,but still _replaceMod:" + needID);
             }
             for(var i=0;i<this._mods.length;i++){
@@ -440,7 +441,7 @@ var sjs = (function(UNDEF) {
                     return folder;
                 }
                 else{
-                    return folder + "/" + (pathID.replace(/\./g,"/")) + "." + ext + "?" + _getModVersion(orgPath);
+                    return folder + (pathID.replace(/\./g,"/")) + "." + ext + "?" + _getModVersion(orgPath);
                 }
             }
             paths.length--;
@@ -481,9 +482,9 @@ var sjs = (function(UNDEF) {
         }
         retPath = _getPathDefPath(retPath);
         
-        //default folder support for begin as ./ or xxx/ style path,no support ../ or ../../ replace
-        if(_defaultFolder && (retPath.indexOf("./")==0 || retPath.substr(0,1) != "/" && retPath.indexOf("://")<0)){
-            retPath = _defaultFolder + (retPath.indexOf("./")==0?retPath.substr(2):retPath);        
+        //default folder support for begin as common(xxx/yyy.js), can not support for ./ , ../ or ../../ replace
+        if(_defaultFolder && retPath.indexOf("./")!=0 && retPath.substr(0,1) != "/" && retPath.indexOf("://")<0){
+            retPath = _defaultFolder + retPath;//(retPath.indexOf("./")==0?retPath.substr(2):retPath);        
         }
         return retPath;
     }
@@ -610,7 +611,7 @@ var sjs = (function(UNDEF) {
             if(folder && folder.slice(-1)!="/"){
                 folder = folder + "/";
             }
-            _modPath[js.toLowerCase()] = folder;
+            _modPath[js.toLowerCase()] = folder.toLowerCase();
             return this;
         }
 
